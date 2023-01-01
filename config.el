@@ -66,7 +66,7 @@
 
 (setq org-log-into-drawer t)
 
-(setq org-agenda-files todo-file)
+;;(setq org-agenda-files todo-file)
 
 (after! org
   (setq org-agenda-span 'month
