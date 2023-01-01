@@ -6,6 +6,13 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
+
+(setq workspace-dir-wsl "/mnt/c/Users/liang/iCloudDrive/Documents/WorkSpace" )
+(setq workspace-dir-mac "~/Documents/WorkSpace" )
+(setq workspace-dir workspace-dir-wsl)
+
+(setq todo-file (concat workspace-dir "/gtd.org"))
+
 (setq user-full-name "LIANG Qihang"
       user-mail-address "liangqihang1@hotmail.com"
       projectile-project-search-path '("~/"))
@@ -47,7 +54,7 @@
 (pushnew! initial-frame-alist '(width . 105) '(height . 162))
 ;; (add-hook 'window-setup-hook' #'toggle-frame-amximized)
 ;; (add-hook 'window-setup-hook' #'toggle-frame-fullscreen)
-(setq deft-directory "~/Documents/WorkSpace"
+(setq deft-directory 'workspace-dir
       deft-extensions '("org" "md")
       deft-recursive t)
 
@@ -55,38 +62,30 @@
       org-journal-date-format "%Y%m%d"
       org-journal-file-format "%Y%m%d.org")
 
-(setq org-directory "~/Documents/WorkSpace/")
+(setq org-directory workspace-dir)
 
 (setq org-log-into-drawer t)
 
-(defun ndk/count-done ()
-  (interactive)
-  (save-excursion
-    ;; we need to end up *before* the start of the drawer in order
-    ;; to parse it correctly, so we back up one line from where org-log-beginning tells us.
-    (goto-char (org-log-beginning))
-    (forward-line -1)
-    (let ((contents (cadr (org-element-drawer-parser nil nil))))
-      (count-lines (plist-get contents :contents-begin)
-                   (plist-get contents :contents-end)))))
-
-(defun ndk/put-count ()
-  (interactive)
-  (let ((count (ndk/count-done)))
-    (org-entry-put (point) "done-count" (format "%d" count))))
+(setq org-agenda-files todo-file)
 
 (after! org
   (setq org-agenda-span 'month
         org-todo-keywords '((sequence "TODO(t)" "INPG(i)" "HOLD(h)" "|" "DONE(d)" "CANCELLED(c)" "FAIL(f)"))
         org-log-done 'time
-        org-tags-column -100
+        org-tags-column -110
         org-todo-keyword-faces '(("TODO" . "#00ff00")
                                  ("INPG" . "#ffff00")
                                  ("HOLD" . org-warning)))
   (setq org-capture-templates
-        '(("t" "Todo" entry (file "~/Documents/WorkSpace/gtd.org")
-           "* TODO %^{Description}\?\n:LOGBOOK:\n- Added: %U\n:END:")))
+         '(("t" "Todo" entry (file todo-dir)
+            "* TODO %^{Description}\n:LOGBOOK:\n- Added: %U\n:END:")))
 )
+
+
+ ;; (setq org-capture-templates
+ ;;        '(("t" "Todo" entry (file todo-dir)
+ ;;           "* TODO %^{Description}\n:LOGBOOK:\n- Added: %U\n:END:")))
+ ;;  (setq '(org-agenda-files '("~/Documents/WorkSpace/plans.org"))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an

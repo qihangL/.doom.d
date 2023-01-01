@@ -6,7 +6,6 @@
  '(blink-cursor-mode nil)
  '(column-number-mode t)
  '(menu-bar-mode nil)
- '(org-agenda-files '("~/Documents/WorkSpace/plans.org"))
  '(size-indication-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
