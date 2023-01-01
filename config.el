@@ -44,8 +44,12 @@
 (setq org-directory "~/org/")
 
 (after! org
-  (setq org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
-        org-log-done 'time)
+  (setq org-todo-keywords '((sequence "TODO(t)" "INPG(i)" "HOLD(h)" "|" "DONE(d)" "CANCELLED(c)"))
+        org-log-done 'time
+        org-tags-column -80
+        org-todo-keyword-faces '(("TODO" . "#00ff00")
+                                 ("INPG" . "#ffff00")
+                                 ("HOLD" . org-warning)))
   )
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
