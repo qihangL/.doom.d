@@ -6,8 +6,7 @@
  '(blink-cursor-mode nil)
  '(column-number-mode t)
  '(menu-bar-mode nil)
- '(org-agenda-files
-   '("/mnt/c/Users/liang/iCloudDrive/Documents/WorkSpace/gtd.org" "/mnt/c/Users/liang/iCloudDrive/Documents/WorkSpace/archive.org"))
+ '(org-agenda-files '("~/Documents/WorkSpace/gtd.org"))
  '(size-indication-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces

@@ -9,7 +9,7 @@
 
 (setq workspace-dir-wsl "/mnt/c/Users/liang/iCloudDrive/Documents/WorkSpace" )
 (setq workspace-dir-mac "~/Documents/WorkSpace" )
-(setq workspace-dir workspace-dir-wsl)
+(setq workspace-dir workspace-dir-mac)
 
 (setq todo-file (concat workspace-dir "/gtd.org"))
 
@@ -54,9 +54,11 @@
 (pushnew! initial-frame-alist '(width . 105) '(height . 162))
 ;; (add-hook 'window-setup-hook' #'toggle-frame-amximized)
 ;; (add-hook 'window-setup-hook' #'toggle-frame-fullscreen)
-(setq deft-directory 'workspace-dir
+(setq deft-directory (concat workspace-dir "/notes")
       deft-extensions '("org" "md")
       deft-recursive t)
+
+(setq org-roam-directory (concat workspace-dir "/notes"))
 
 (setq org-journal-date-prefix "#+TITLE: "
       org-journal-date-format "%Y%m%d"
@@ -65,8 +67,6 @@
 (setq org-directory workspace-dir)
 
 (setq org-log-into-drawer t)
-
-;;(setq org-agenda-files todo-file)
 
 (after! org
   (setq org-agenda-span 'month
@@ -80,7 +80,6 @@
          '(("t" "Todo" entry (file todo-dir)
             "* TODO %^{Description}\n:LOGBOOK:\n- Added: %U\n:END:")))
 )
-
 
  ;; (setq org-capture-templates
  ;;        '(("t" "Todo" entry (file todo-dir)
