@@ -6,17 +6,14 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-
-(setq workspace-dir-wsl "/mnt/c/Users/liang/iCloudDrive/Documents/WorkSpace" )
-(setq workspace-dir-mac "~/Documents/WorkSpace" )
-(setq workspace-dir workspace-dir-mac)
-
-(setq todo-file (concat workspace-dir "/gtd.org"))
-
 (setq user-full-name "LIANG Qihang"
-      user-mail-address "liangqihang1@hotmail.com"
-      projectile-project-search-path '("~/"))
+      user-mail-address "liangqihang1@hotmail.com")
 
+(setq doom-theme 'doom-monokai-pro)
+
+(setq display-line-numbers-type t)
+
+(setq +doom-dashboard-ascii-banner-fn nil)
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -40,33 +37,32 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-monokai-pro)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
+;;
+(pushnew! initial-frame-alist '(width . 100) '(height . 150))
 
-(setq +doom-dashboard-ascii-banner-fn nil)
+(setq workspace-dir-mac "~/Documents/WorkSpace")
+(setq workspace-dir workspace-dir-mac)
 
-(pushnew! initial-frame-alist '(width . 105) '(height . 162))
-;; (add-hook 'window-setup-hook' #'toggle-frame-amximized)
-;; (add-hook 'window-setup-hook' #'toggle-frame-fullscreen)
-(setq deft-directory (concat workspace-dir "/notes")
-      deft-extensions '("org" "md")
-      deft-recursive t)
+(setq todo-file (concat workspace-dir "/gtd.org"))
 
-(setq org-roam-directory (concat workspace-dir "/notes"))
+(setq org-directory workspace-dir
+      org-log-into-drawer t)
 
-(setq org-journal-date-prefix "#+TITLE: "
-      org-journal-date-format "%Y%m%d"
-      org-journal-file-format "%Y%m%d.org")
+;; /Users/qihang/.emacs.d/.local/straight/build-28.2/doom-snippets/
+(setq +latex-viewers '(skim))
 
-(setq org-directory workspace-dir)
+(defun org-babel-edit-prep:python (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
 
-(setq org-log-into-drawer t)
+
+;; (setq-hook! 'python-mode-hook +lsp-company-backends 'company-capf)
 
 (after! org
   (setq org-agenda-span 'month
@@ -80,12 +76,13 @@
          '(("t" "Todo" entry (file todo-dir)
             "* TODO %^{Description}\n:LOGBOOK:\n- Added: %U\n:END:")))
 )
-
- ;; (setq org-capture-templates
- ;;        '(("t" "Todo" entry (file todo-dir)
- ;;           "* TODO %^{Description}\n:LOGBOOK:\n- Added: %U\n:END:")))
- ;;  (setq '(org-agenda-files '("~/Documents/WorkSpace/plans.org"))
-
+;; ---------------------------------
+;; deft and roam path
+;; (setq deft-directory (concat workspace-dir "/notes")
+;;       deft-extensions '("org" "md")
+;;       deft-recursive t)
+;; (setq org-roam-directory (concat workspace-dir "/notes"))
+;; ---------------------------------
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
